@@ -1,0 +1,80 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Usuario</title>
+    <link rel="" href="">
+</head>
+<body>
+    <div class="container">
+        <h1>Configuración de Usuario</h1>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <!-- Perfil de usuario -->
+        <section class="profile-settings">
+            <h2>Perfil</h2>
+            <form method="post" enctype="multipart/form-data" action="{% url 'users_app:profile' user.id %}">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="username">Nombre de usuario:</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" readonly>
+                </div>
+                
+                <div>
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" readonly>
+                </div>
+                
+                <div>
+                    <label for="profile_image">Imagen de perfil:</label>
+                    <input type="file" id="profile_image" name="profile_image">
+                    {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" alt="Imagen de perfil actual" width="100">
+                    {% else %}
+                        <img src="{% static 'imgs/undraw_profile.svg' %}" alt="Imagen de perfil predeterminada" width="100">
+                    {% endif %}
+                </div>
+                
+                <button type="submit">Guardar cambios</button>
+            </form>
+        </section>
+
+        <!-- Configuraciones adicionales -->
+        <section class="additional-settings">
+            <h2>Opciones Generales</h2>
+            <form method="post" action="{% url 'users_app:settings' %}">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="notification">Notificaciones:</label>
+                    <input type="checkbox" id="notification" name="notification" {% if user.notification %}checked{% endif %}>
+                </div>
+                
+                <div>
+                    <label for="privacy">Modo privado:</label>
+                    <input type="checkbox" id="privacy" name="privacy" {% if user.privacy %}checked{% endif %}>
+                </div>
+                
+                <button type="submit">Actualizar configuración</button>
+            </form>
+        </section>
+
+        <a href="{% url 'users_app:logout' %}" class="logout-link">Cerrar sesión</a>
+    </div>
+   
+</body>
+</html>

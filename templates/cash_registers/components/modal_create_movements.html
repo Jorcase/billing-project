@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div class="modal fade" id="movementCreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Creación de Movimiento</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+           <div class="col">
+               <div class="card text-center">
+                   <div class="card-header card-header-primary">
+                       <h4 class="card-title">Ingrese los datos correspondientes para la creacion de un Movimiento.</h4>
+                   </div>
+                   <div class="card-body">
+                       <div class="container">
+                          <form id="movement-form" method="POST">
+                            {% csrf_token %}
+                            <!-- Aquí los campos del formulario como cantidad, tipo de transacción, etc. -->
+                             <div class="container">
+                                <div class="row mb-4">
+                                  <div class="col-md-12">
+                                    <label class="bmd-label">Monto</label>
+                                    {{ movements_form.amount }}
+                                  </div>
+                                </div>
+                                <div class="row mb-4">
+                                  <div class="col-md-12">
+                                    <label class="bmd-label">Tipo de Pagó</label>
+                                    {{ movements_form.payment_type }}
+                                  </div>
+                                </div>
+                                <div class="row mb-2">
+                                  <div class="col-md-12">
+                                    <label class="bmd-label">Tipo de Movimiento</label>
+                                    {{ movements_form.transaction_type }}
+                                  </div>
+                                </div>
+                                <div class="row mb-2">
+                                  <div class="col-md-12">
+                                    <label class="bmd-label">Descripción</label>
+                                    {{ movements_form.description }}
+                                  </div>
+                                </div>
+                             </div>
+                          </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" id="submitMovement">Crear Movimiento</button>
+      </div>
+    </div>
+  </div>
+</div>

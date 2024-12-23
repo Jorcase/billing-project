@@ -1,0 +1,81 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Detalle de Caja{% endblock title %}
+
+{% block stylesheets %}
+    
+{% endblock stylesheets %}
+
+{% block content %}
+<!-- Contenido PRINCIPAL -->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <div class="sep-1">
+                            <h4 class="card-title">Actualizar Movimiento</h4>
+                            <p class="card-category">Modifica los datos del movimiento relacionado con la caja <strong>#{{ cash.pk }}</strong></p>
+                        </div>
+                    </div>
+                    <div class="card-body p-3">
+                        <form method="post">
+                            {% csrf_token %}
+                            <!-- Campo para el tipo de pago -->
+                            <div class="row mb-4 mt-2 ml-2 mr-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="id_payment_type">Tipo de Pago</label>
+                                        {{ form.payment_type }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4 ml-2 mr-2">
+                                <div class="col-md-12">
+                                    <!-- Campo para el monto -->
+                                    <div class="form-group">
+                                        <label for="id_amount">Monto</label>
+                                        {{ form.amount }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4 ml-2 mr-2">
+                                <div class="col-md-12">
+                                    <!-- Campo para el tipo de transacción -->
+                                    <div class="form-group">
+                                        <label for="id_transaction_type">Tipo de Transacción</label>
+                                        {{ form.transaction_type }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4 ml-2 mr-2">
+                                <div class="col-md-12">
+                                    <!-- Campo para la descripción -->
+                                    <div class="form-group">
+                                        <label for="id_description">Descripción</label>
+                                        {{ form.description }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3 ml-2">
+                                <a href="{% url 'cash_app:cash_detail' cash_id %}" class="btn btn-secondary btn-round">Cancelar</a>
+                                {% if form.instance.pk %}
+                                    <button type="submit" class="btn btn-primary btn-round">Actualizar Movimiento</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+<!-- CARGA DE LOS ARCHIVOS JavaScript -->
+
+{% endblock javascripts %}

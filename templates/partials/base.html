@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="ltr" lang="es-AR">
+    
+    <head>
+        {% include 'partials/css.html' %}
+        <title>{% block title %}Inicio{% endblock %} | Instituto ISI</title>
+        {% block extra_css %}{% endblock extra_css %}
+    </head>
+
+<body>
+
+        <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'partials/sidebar.html' %} <!-- menú lateral -->
+        
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                
+
+                <!-- Begin Page Content -->
+                <div class="container light-style flex-grow-1 container-p-y">
+                    <!-- Dinamic content -->
+                    {% block content %}
+                        
+                    {% endblock content%}
+                    <!--End Dinamic content-->
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            {% include 'partials/footer.html'%}
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Esta seguro que desea salir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Confirme si quiere cerrar la sesión.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <!-- Botón para confirmar el logout y disparar la petición -->
+                    <button class="btn btn-primary" data-logout-url="{{ logout_url }}" id="confirmLogout">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>        
+        
+    </div>
+    {% include 'partials/js.html' %}
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+
+</html>

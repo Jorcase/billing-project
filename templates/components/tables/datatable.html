@@ -1,0 +1,78 @@
+{% load static %}
+<style>
+    .add-user-btn-1 {
+        width: auto;
+        height: 35px;
+        font-family: "Roboto", Arial, Helvetica, sans-serif;
+        border: none;
+        border-radius: 5px;
+        color: #444444;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        background-color: #e7e7e7;
+        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-right: 20px;
+        cursor: pointer;
+        transition: box-shadow 0.3s ease;
+    }
+    .card-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .sep-1 {
+        width: 70%;
+        height: 100%;
+    }
+    .sep-2 {
+        width: 30%;
+        height: 100%;
+    }
+    .add-user-btn-1:hover {
+        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+    @media screen and (max-width: 991px) {
+        .add-user-btn-1 span {
+            display: none;
+        }
+    }
+</style>
+<!-- -------------------- -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header card-header-primary" style="position: relative;">
+                <div class="sep-1">
+                    <h4 class="card-title">{{name}}</h4>
+                    <p class="card-category">Aquí puede vizualizar todos los {{name}}</p>
+                </div>
+                <div class="sep-2">
+                    <button class="add-user-btn-1" id="create-{{name}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M14 14q.425 0 .713-.288T15 13v-2h2q.425 0 .713-.288T18 10t-.288-.712T17 9h-2V7q0-.425-.288-.712T14 6t-.712.288T13 7v2h-2q-.425 0-.712.288T10 10t.288.713T11 11h2v2q0 .425.288.713T14 14m-6 4q-.825 0-1.412-.587T6 16V4q0-.825.588-1.412T8 2h12q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18zm-4 4q-.825 0-1.412-.587T2 20V7q0-.425.288-.712T3 6t.713.288T4 7v13h13q.425 0 .713.288T18 21t-.288.713T17 22z"/>
+                        </svg>
+                        <span>Añadir {{name}}</span>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-3">
+                <table id={{tableId}} data-url="{{url}}" class="table table-sm fs--1 mb-0 overflow-hidden" style="width:100%;">
+                    <thead class="bg-200 text-900">
+                        <tr>
+                        </tr>
+                    </thead>
+                    <tbody class="overflow-hidden">
+                        <!-- Autocomplete with dates -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

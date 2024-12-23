@@ -1,0 +1,160 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Cajas{% endblock title %}
+
+{% block stylesheets %}
+{% comment %} <!-- Datatable -->
+<link rel="stylesheet" href={% static 'vendor/datatables/datatables.css' %}> {% endcomment %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<style>
+   .reg-caja-1 > * {
+      font-family: "Roboto", Helvetica, Arial, sans-serif;
+   }
+   .reg-caja-1 {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+   }
+   .reg-caja-1 > label {
+      margin: 0;
+   }
+   .reg-caja-1 > input[type="text"] {
+      height: 40px;
+      border: none;
+      border-radius: 5px;
+      background-color: #e7e7e7;
+      padding: 10px;
+      transition: all 0.3s ease;
+   }
+   .reg-caja-1 > input[type="text"]:hover {
+      border: 1px solid #333333;
+      box-shadow: 0 8px 8px rgba(0,0,0,0.2);
+   }
+   .reg-caja-1 > input[type="text"]:focus {
+      border: 2px solid #333333;
+   }
+   .reg-caja-1 label {
+      color: #333333;
+   }
+   .hr-form-caja {
+      border: none;
+      border-top: 1px solid #dfdfdf !important;
+   }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<!-- Contenido Principal -->
+
+ <div class="content">
+    
+   <div class="row">
+      <div class="col-md-6">
+         <div class="card">
+            <div class="card-body">
+               
+               {% if existing_cash_register %}
+                  <h5 class="card-title">Detalle de la Caja Abierta</h5>
+                  <p class="card-text">Previsualizacion de la Caja Abierta, datos.</p>
+                  <hr class="hr-form-caja">
+                  <p><strong>Estado de la caja:</strong> {{ existing_cash_register.get_custom_status_display }}</p>
+                  <p><strong>Monto inicial:</strong><span class="badge bg-primary"> ${{ existing_cash_register.initial_balance }}</span></p>
+                  <p><strong>Saldo actual:</strong><span class="badge bg-info" id="current_balance"> ${{ existing_cash_register.current_balance }}</span></p>
+                  <p><strong>Fecha de apertura:</strong> {{ existing_cash_register.created_at }}</p>
+                  <p><strong>Fecha de cierre:</strong> {% if existing_cash_register.close_date %} {{ existing_cash_register.close_date }} {% else %} No cerrado aún {% endif %}</p>
+                  
+
+                  <div class="row mt-2 ml-2">
+                     <button 
+                        class="btn btn-danger" 
+                        type="button" 
+                        id="close-cash-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#closeCashModal">
+                        Cerrar caja
+                     </button>
+                     <button class="btn btn-primary" type="submit" id="create-Movimientos">Crear Movimiento</button>
+                  </div>
+                  
+               {% else %}
+                  <h5 class="card-title">Abrir caja</h5>
+                  <p class="card-text">Ingrese el monto inicial para abrir la caja del día.</p>
+                  <hr class="hr-form-caja">
+                  <form class="reg-caja-1" method="post" id="movimiento_form" action="{% url 'cash_app:cash_create' %}">
+                     {% csrf_token %}
+                     <input type="hidden" name="caja_id" value="{{ caja.id }}">
+                     
+                     <label for="monto">Monto inicial</label>
+                     {{ cash_form.initial_balance }}
+                     
+                     <button class="btn btn-primary" type="submit">Abrir caja</button>
+                  </form>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6">
+         <div class="card card-chart">
+             <div class="card-header card-header-success">
+                 <div class="ct-chart" id="dailySalesChart"></div>
+             </div>
+             <div class="card-body">
+                 <h4 class="card-title">Movimientos de Caja</h4>
+                 <p class="card-category">
+                     <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> 
+                     aumento en los ingresos de hoy.
+                 </p>
+             </div>
+             <div class="card-footer">
+                 <div class="stats">
+                     <i class="material-icons">access_time</i> actualizado hace 4 minutos
+                 </div>
+             </div>
+         </div>
+     </div>
+   </div>
+
+    <!-- Messages -->
+    {% include "components/messages/messages.html" %}
+    <!-- Incluyendo DataTable Generico -->
+    {% include "components/tables/datatable.html" with tableId="tableCash" name="Cajas" url=url_datatable urls=urls %}
+    <!-- Modal para Confirmar Cierre de Caja -->
+    {% include "components/modals/modal.html" with modal_id="closeCashModal" modal_size="modal-md" modal_label="closeCashModalLabel" modal_title="Confirmar Cierre de Caja" modal_body="¿Estás seguro de que deseas cerrar la caja abierta?" form_id="closeCashRegisterForm" button_id="confirmCloseButton" %}
+    <!-- Modal para incluir crear un Movimiento -->
+    {% include "cash_registers/components/modal_create_movements.html" %}
+
+
+ </div>
+
+<!-- Definir las URLs para JavaScript -->
+<script id="urls-data" type="application/json">
+   {
+       "cash_create": "{% url 'cash_app:cash_create' %}",
+       "cash_detail": "{% url 'cash_app:cash_detail' 0 %}",
+       "cash_delete": "{% url 'cash_app:cash_delete' 0 %}",
+       "cash_close": "{% url 'cash_app:close_cash' %}",
+       "movement_create": "{% url 'cash_app:movements_create' %}"
+   }
+</script>
+
+<!-- Inluyendo Modal para el Detalle del Cajas -->
+{% include "cash_registers/components/modal_detail.html" %}
+<!-- Incluyendo Modal para la confirmacion de ELIMINACION -->
+{% include "components/modals/modal.html" with modal_id="deleteModal" modal_title="Eliminación de la Caja" form_id="deleteForm" modal_body="Quiere confirmar la eliminación de la Caja que acaba de SELECCIONAR?." button_id="deleteButton" %}
+
+{% endblock content %}
+
+<!-- Scripts -->
+{% block javascripts %}
+<!-- DataTable -->
+{% comment %} <script src="{% static 'vendor/Datatables/datatables.js' %}"></script> {% endcomment %}
+
+<!-- DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'cashs/cashs-datatable.js' %}"></script>
+<script src="{% static 'reports/daily_movements.js' %}"></script>
+
+
+{% endblock javascripts %}

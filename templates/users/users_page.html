@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Usuarios{% endblock title %}
+{% block stylesheets %}
+{% comment %} <!-- Datatable -->
+<link rel="stylesheet" href={% static 'vendor/datatables/datatables.css' %}> {% endcomment %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+{% endblock stylesheets %}
+
+{% block content %}
+<!-- Contenido Principal -->
+ <div class="content">
+    
+    {% csrf_token %}
+    <!-- Incluyendo DataTable Generico -->
+    {% include "components/tables/datatable.html" with tableId="tableUser" name="Usuarios" url=url_datatable urls=urls %}
+    
+ </div>
+
+<!-- Definir las URLs para JavaScript -->
+<script id="urls-data" type="application/json">
+   {
+       "user_create": "{% url 'users_app:users_create' %}",
+       "user_edit": "{% url 'users_app:users_update' 0 %}",
+       "user_detail": "{% url 'users_app:users_detail' 0 %}",
+       "user_delete": "{% url 'users_app:users_delete' 0 %}"
+   }
+</script>
+
+<!-- Inluyendo Modal para el Detalle del Usuario -->
+{% include "users/components/modal_detail.html" %}
+<!-- Incluyendo Modal para la confirmacion de ELIMINACION -->
+{% include "components/modals/modal.html" with modal_id="deleteModal" modal_title="Eliminación de un Usuario" form_id="deleteForm" modal_body="Quiere confirmar la eliminación del USUARIO que acaba de SELECCIONAR?." button_id="deleteButton" %}
+
+{% endblock content %}
+
+<!-- Scripts -->
+{% block javascripts %}
+<!-- DataTable -->
+{% comment %} <script src="{% static 'vendor/Datatables/datatables.js' %}"></script> {% endcomment %}
+
+<!-- DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'users/users-datatable.js' %}"></script>
+
+{% endblock javascripts %}

@@ -1,0 +1,54 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Detalle del Usuario{% endblock title %}
+{% block stylesheets %}
+ <!-- Aqui insetamos estilos para el Perfil-->
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-header card-header-primary">
+                    <!-- Espacio para el titulo de la tarjeta -->
+                    <h4 class="card-title">Detalle del Usuario</h4>
+                    <p class="card-category">Visualizacion de los Datos del Usuario Seleccionado.</p>
+                </div>
+                <div class="card-body">
+                    <!-- Espacio para el cuerpo de la tarjeta -->
+                    <blockquote class="blockquote mb-0">
+                        <h5 class="card-title">{{ user.get_full_name }}</h5>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">Usuario:</label>
+                                    {{ user.username }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Nombre Completo:</label>
+                                    {{ user.get_full_name }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="floatingInputDisabled" placeholder="name@example.com" value="{{user.username}}" disabled>
+                                        <label for="floatingInputDisabled">Usuario</label>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>A well-known quote, contained in a blockquote element.</p>
+                        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+<!-- Scripts -->
+{% block javascripts %}
+
+{% endblock javascripts %}

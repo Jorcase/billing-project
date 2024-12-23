@@ -1,0 +1,32 @@
+.isi-href {
+    width: auto;
+    height: 80px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: unset;
+}
+.isi-href img {
+    width: auto;
+    height: 100%;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 5px rgba(0,0,0,0.3));
+    transition: filter 0.3s ease;
+}
+.isi-href > img:hover {
+    filter: drop-shadow(0 4px 5px rgba(0,0,0,0.5));
+}
+.form-control {
+    caret-color: var(--primary);
+}
+.form-control, .srch {
+    box-shadow: unset !important;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) !important;
+}
+.form-control:focus {
+    border: unset;
+    border: 1px solid black !important;
+}
+#userDropdown:hover span {
+    color: #656565 !important;
+}

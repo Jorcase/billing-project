@@ -1,0 +1,16 @@
+/* Paleta de colores para el sistema ISI */
+:root {
+    /* CSS HEX */
+    --light-blue: #c3dfe0ff;
+    --rich-black: #001021ff;
+    --wenge: #725d68ff;
+    --myrtle-green: #297373ff;
+    --melon: #ffb4a2ff;
+
+    /* CSS HSL */
+    --light-blue-hsl: hsla(182, 32%, 82%, 1);
+    --rich-black-hsl: hsla(211, 100%, 6%, 1);
+    --wenge-hsl: hsla(329, 10%, 41%, 1);
+    --myrtle-green-hsl: hsla(180, 47%, 31%, 1);
+    --melon-hsl: hsla(12, 100%, 82%, 1);
+}

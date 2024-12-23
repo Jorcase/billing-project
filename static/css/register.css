@@ -1,0 +1,59 @@
+.email-svg {
+    top: 111px !important;
+    left: 5px;
+}
+.pass-svg {
+    top: 163px !important;
+    left: 5px;
+}
+.name-svg {
+    top: 8px;
+    left: 5px;
+}
+.surname-svg {
+    top: 60px;
+    left: 5px;
+}
+.pass-svg2 {
+    position: absolute;
+    top: 215px;
+    left: 5px;
+}
+#google-reg, #fb-reg {
+    width: 100%;
+    height: 45px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: var(--smb);
+    font-size: 1.10rem;
+    font-family: var(--f-fam);
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+#google-reg {
+    background-color: #4285F4;
+}
+#fb-reg {
+    background-color: #4267B2;
+}
+#google-reg:hover {
+    background-color: #366dc5;
+}
+#fb-reg:hover {
+    background-color: #263d6b;
+}
+#google-reg:hover, #fb-reg:hover {
+    text-shadow: 0 3px 4px rgba(0,0,0,0.6);
+}
+.hr-rg {
+    width: 100%;
+    border: none;
+    border-top: 1px solid rgb(211, 211, 211);
+}
+form label {
+    font-family: var(--f-fam);
+    font-size: 0.9rem;
+    vertical-align: middle;
+    cursor: pointer;
+}

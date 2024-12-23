@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include "partials/css.html" %}
+    <title>{% block title %}Registro{% endblock %} | Instituto ISI</title>
+</head>
+<body class="log-bod">
+
+   
+
+    <div class="massCont">
+        <div class="left-cont">
+            <a href="https://isi.com.ar/">
+                <img src="{% static 'imgs/logo_isi.png' %}" alt="ISI Instituto">
+            </a>
+        </div>
+        <div class="right-cont">
+            <div class="minCont">
+                <h1>Bienvenido</h1>
+                <p>Cree su cuenta completando los siguientes campos.</p>
+                
+                <form method="POST" action="{% url 'users_app:register' %}" novalidate>
+                    {% csrf_token %}
+                 
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div style="color: red;">{{ form.username.errors }}</div>
+                        {% endif %}
+
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div style="color: red;">{{ form.first_name.errors }}</div>
+                        {% endif %}
+               
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div style="color: red;">{{ form.last_name.errors }}</div>
+                        {% endif %}
+
+                        {{ form.email }}
+                        {% if form.last_name.errors %}
+                            <div style="color: red;">{{ form.email.errors }}</div>
+                        {% endif %}                        
+                  
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div style="color: red;">{{ form.password.errors }}</div>
+                        {% endif %}
+                   
+                        {{ form.password_confirm }}
+                        {% if form.password_confirm.errors %}
+                            <div style="color: red;">{{ form.password_confirm.errors }}</div>
+                        {% endif %}
+                    
+                    <input type="submit" value="Registrarse">
+                </form>
+                
+                
+                <div class="bottom-text">
+                    <p>¿Ya tiene una cuenta? <span><a class="xd" href="{% url 'users_app:login' %}">Inicie sesión</a></span>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

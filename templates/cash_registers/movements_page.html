@@ -1,0 +1,53 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Movimientos{% endblock title %}
+
+{% block stylesheets %}
+{% comment %} <!-- Datatable -->
+<link rel="stylesheet" href={% static 'vendor/datatables/datatables.css' %}> {% endcomment %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+{% endblock stylesheets %}
+
+{% block content %}
+<!-- Contenido Principal -->
+
+ <div class="content">
+
+    <!-- Messages -->
+    {% include "components/messages/messages.html" %}
+
+    {% csrf_token %}
+    <!-- Incluyendo DataTable Generico -->
+    {% include "components/tables/datatable.html" with tableId="tableMovements" name="Movimientos" url=url_datatable urls=urls %}
+    
+ </div>
+
+<!-- Definir las URLs para JavaScript -->
+<script id="urls-data" type="application/json">
+   {
+       "movements_create": "{% url 'cash_app:movements_create' %}",
+       "movements_update": "{% url 'cash_app:movements_update' 0 %}",
+       "movements_detail": "{% url 'cash_app:movements_detail' 0 %}",
+       "movements_delete": "{% url 'cash_app:movements_delete' 0 %}"
+   }
+</script>
+
+<!-- Inluyendo Modal para el Detalle del Movimientos -->
+{% include "cash_registers/components/modal_detail.html" %}
+<!-- Incluyendo Modal para la creacion de los Movimientos-->
+{% include "cash_registers/components/modal_create_movements.html" %}
+
+{% endblock content %}
+
+<!-- Scripts -->
+{% block javascripts %}
+<!-- DataTable -->
+{% comment %} <script src="{% static 'vendor/Datatables/datatables.js' %}"></script> {% endcomment %}
+
+<!-- DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'cashs/movements-datatable.js' %}"></script>
+
+{% endblock javascripts %}

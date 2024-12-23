@@ -1,0 +1,290 @@
+* {
+    box-sizing: border-box;
+    scrollbar-width: thin;
+}
+html {
+    scrollbar-color: var(--primary) var(--col3);
+}
+body.log-bod {
+    background-color: var(--col1);
+    height: 100vh !important;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-weight: normal;
+}
+.massCont {
+    width: 80%;
+    height: 95vh;
+    border-radius: 7px;
+    box-shadow: var(--smb0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: box-shadow 0.5s ease;
+}
+.left-cont {
+    width: 40%;
+    background-color: var(--primary);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+.left-cont a {
+    width: auto;
+    height: 16%;
+
+}
+.left-cont > a > img {
+    width: auto;
+    height: 90%;
+    filter: drop-shadow(0 4px 3px rgba(0,0,0,0.5));
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.left-cont img:hover {
+    transform: scale(1.15);
+}
+.right-cont {
+    width: 60%;
+    padding: 15px;
+    background-color: white;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.left-cont, .right-cont {
+    height: 100%;
+    transition: all 0.3s ease;
+}
+.minCont {
+    width: 80%;
+    height: 90%;
+    margin: 0 auto;
+}
+h1 {
+    display: inline-block;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, var(--chx), aqua);
+    background-clip: text;
+    -webkit-background-clip: text;
+    margin: 0;
+    font-size: 2.5rem;
+    text-align: left;
+    cursor: default;
+}
+h1:hover {
+    background-image: linear-gradient(to right, var(--chxhov), aqua);
+}
+.minCont > p {
+    cursor: default;
+}
+.right-cont form {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    position: relative;
+}
+form svg {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+}
+.email-svg {
+    top: 8px;
+    left: 5px;
+}
+.pass-svg {
+    top: 58px;
+    left: 5px;
+}
+form input[type="text"], form input[type="password"] {
+    width: 100%;
+    height: 45px;
+    border: 1px solid rgb(153, 153, 153);
+    border-radius: 10px;
+    background-color: var(--col2);
+    box-shadow: var(--smb);
+    padding-left: 35px;
+}
+form input[type="password"] {
+    padding-right: 5px;
+}
+form input[type="text"]:hover, form input[type="password"]:hover {
+    box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+}
+form input[type="text"]:focus, form input[type="password"]:focus {
+    border: 2px solid black;
+    outline: none;
+}
+form input[type="text"]::placeholder, form input[type="password"]::placeholder {
+    color: var(--f-col);
+    font-family: var(--f-fam);
+}
+form label {
+    font-family: var(--f-fam);
+    font-size: 0.9rem;
+    vertical-align: middle;
+    cursor: pointer;
+}
+input[type="checkbox"] {
+    margin-right: 5px;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+}
+input[type="checkbox"]:hover {
+    border: 2px solid black;
+    box-shadow: 0 3px 4px rgba(0,0,0,0.3);
+}
+input[type="checkbox"]:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+form label {
+    font-size: 15px;
+    vertical-align: middle; 
+}
+form .row-form > a {
+    font-size: 15px;
+    color: var(--chx);
+    transition: color 0.3s ease;
+}
+form .row-form > a:hover, .xd:hover {
+    color: var(--chxhov);
+}
+form input[type="submit"] {
+    width: 100%;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--primary);
+    box-shadow: var(--smb);
+    color: white;
+    font-size: 1.10rem;
+    font-family: var(--f-fam);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+form input[type="submit"]:hover {
+    background-color: var(--chxhov);
+}
+.row-form {
+    width: 100%;
+    height: auto;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.xd {
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+.bottom-text {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+@media screen and (max-width: 767px) {
+    html {
+        scrollbar-width: thin;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        overflow: hidden;
+    }
+    .massCont {
+        width: 95%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    .left-cont {
+        display: none;
+    }
+    .right-cont {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+    .right-cont h1 {
+        font-size: 1.5rem;
+    }
+    form input[type="text"]::placeholder, form input[type="password"]::placeholder {
+        font-size: 94%;
+    }
+    form .row-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+    }
+    form label {
+        font-size: 100%;
+        vertical-align: middle;
+    }
+    form .row-form > a  {
+        font-size: 85%;
+        margin-top: 10px;
+    }
+}
+:root {
+    --col1: #f1f1ff;
+    --col2: #f8f8f8;
+    --col3: #f2f2f2;
+    --f-col: #4b4b4b;
+    --smb0: 0 0 30px rgba(0,0,0,0.2);
+    --smb: 0 2px 4px rgba(0,0,0,0.3);
+    --smb2: inset 0 0 3px rgba(0,0,0,0.4);
+    --smb3: inset 0 0 6px rgba(0,0,0,0.3);
+    --smb4: inset 0 0 8px rgba(0,0,0,0.8);
+    --f-fam: "Ubuntu", Arial, Helvetica, sans-serif;
+    --chx: #0051ff;
+    --chxhov: #0d1775;
+    --primary: #4e73df;
+}
+@font-face {
+    font-family: "Ubuntu";
+    src: url(../assets/Ubuntu-Regular.ttf), format("truetype");
+}

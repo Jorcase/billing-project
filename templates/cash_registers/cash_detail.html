@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Detalle de Caja{% endblock title %}
+
+{% block stylesheets %}
+    <!-- Estilos -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+{% endblock stylesheets %}
+
+{% block content %}
+<!-- Contenido PRINCIPAL -->
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">inventory_2</i> <!-- Ícono relacionado con una caja -->
+                        </div>
+                        
+                        <h3 class="card-category card-title">Caja Registradora</h3>
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-12 text-center">
+                                <p class="mb-2 font-weight-bold">Saldo Inicial:</p>
+                                <p class="text-primary h5">${{ cash.initial_balance }}</p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-12 text-center">
+                                <p class="mb-2 font-weight-bold">Saldo Actual:</p>
+                                <p class="text-success h5">${{ cash.current_balance }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">calendar_today</i> Estado: {{ cash.get_status_display }}
+                            <br>
+                            <i class="material-icons">schedule</i> Fecha de Cierre: 
+                            {% if cash.close_date %}
+                                {{ cash.close_date|date:"d/m/Y H:i" }}
+                            {% else %}
+                                Sin cerrar
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Incluyendo DataTable Generico -->
+        {% include "components/tables/datatable.html" with tableId="movementsForCash" name="Movimientos de la Caja" url=url_datatable urls=urls %}
+    </div>
+
+    <!-- Definir las URLs para JavaScript -->
+    <script id="urls-data" type="application/json">
+        {
+            "movements_update": "{% url 'cash_app:movement_update_for_cash' cash.pk 0 %}",
+            "movements_delete": "{% url 'cash_app:movements_delete' 0 %}"
+        }
+    </script>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- CARGA DE LOS ARCHIVOS JavaScript -->
+<script src="{% static 'cashs/detail-cash.js' %}"></script>
+{% endblock javascripts %}

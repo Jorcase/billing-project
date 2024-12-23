@@ -1,0 +1,161 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Usuarios{% endblock title %}
+
+
+{% block stylesheets %}
+<!-- Cargamos los CSS personalizados -->
+{% endblock stylesheets %}
+
+<!-- Contenido Principal -->
+{% block content %}
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <div class="sep-1">
+                            {% if form.instance.pk %}
+                                <h4 class="card-title">Actualización de Usuario</h4>
+                                <p class="card-category">
+                                    Aquí puede actualizar los datos del Usuario.
+                                </p>
+                            {% else %}
+                                <h4 class="card-title">Creación de Usuario</h4>
+                                <p class="card-category">
+                                    Aquí puede registrar un nuevo Usuario.
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body p-3">
+                        <!-- Formulario de creación o actualización de usuario -->
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                  <div class="form-group">
+                                    <label class="bmd-label">Nombre de usuario: </label><br>
+                                    {{ form.username }}
+                                    {% if form.username.errors %}
+                                      <div style="color: red;">{{ form.username.errors }}</div>
+                                    {% endif %}
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label class="bmd-label">Nombres: </label><br>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                      <div style="color: red;">{{ form.first_name.errors }}</div>
+                                    {% endif %}
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="" class="bmd-label">Apellidos: </label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                      <div style="color: red;">{{ form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label">Correo: </label><br>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                            <div style="color: red;">{{ form.email.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label">Contraseña: </label><br>
+                                        <div class="input-group">
+                                            {{ form.password1 }}
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary toggle-password" type="button" data-target="id_password1">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </div>
+                                            {% if form.password1.errors %}
+                                                <div style="color: red;">{{ form.password1.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label">Confirmar Contraseña: </label><br>
+                                        <div class="input-group">
+                                            {{ form.password2 }}
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary toggle-password" type="button" data-target="id_password2">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </div>
+                                            {% if form.password2.errors %}
+                                                <div style="color: red;">{{ form.password2.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label">Grupos: </label><br>
+                                        {{ form.groups }}
+                                        {% if form.groups.errors %}
+                                            <div style="color: red;">{{ form.groups.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label">¿Está Activo?: </label><br>
+                                        {{ form.is_active }}
+                                        {% if form.is_active.errors %}
+                                            <div style="color: red;">{{ form.is_active.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label">¿Es Administrador?: </label><br>
+                                        {{ form.is_staff }}
+                                        {% if form.is_staff.errors %}
+                                            <div style="color: red;">{{ form.is_staff.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Botones de enviar y cancelar -->
+                            <div class="row mt-2 ml-2">
+                                {% if form.instance.pk %}
+                                    <button type="submit" class="btn btn-primary btn-round">Actualizar Usuario</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-primary btn-round">Crear Usuario</button>
+                                {% endif %}
+                                <a href="{% url 'users_app:list' %}" class="btn btn-secondary btn-round">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+<!-- JavaScripts -->
+{% block javascripts %}
+<!-- Cargamos documento básico de JS -->
+<script src="{% static 'users/user-form.js' %}"></script>
+{% endblock javascripts %}
