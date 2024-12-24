@@ -148,3 +148,59 @@ class Movement(BaseAbstractWithUser):
         }
         return item
 
+# Creacion del MODELO PARA LOS ARQUEOS RELACIONADOS A LA CAJA
+class CashRegisterAudit(BaseAbstractWithUser):
+    """
+    Con es clase manejamos LOS MODELOS de ARQUEOS, para la CAJA REGISTRADORA 
+    """
+    # CAJA RELACIONADA
+    cash_register = models.ForeignKey(
+        CashRegister,
+        on_delete=models.CASCADE,
+        related_name='audits',
+        verbose_name="Arqueos",
+        null=True,
+        blank=True
+    )
+    # Campo DEL BALANCE TEORICO
+    theorical_balance = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+    # BALANCE FISÍCO
+    physical_balance = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+    # DISCREPENCIA
+    discrepancy = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+    # Fecha DEL AJUSTE, reutilizacion del campo CREATED_AT
+    # Metodo de la CLASE
+    def calculate_discrepancy(self):
+        """
+        Calcula la discrepancia entre el saldo teórico y el saldo físico.
+        """
+        self.discrepancy = self.physical_balance - self.theoretical_balance
+        self.save()
+
+    def __str__(self):
+        return f"Arqueo - {self.audit_date.date()} - Discrepancia: {self.discrepancy}"
+
+    def to_json(self):
+        return {
+            'id': self.pk,
+            'cash_register': str(self.cash_register),
+            'theoretical_balance': str(self.theoretical_balance),
+            'physical_balance': str(self.physical_balance),
+            'discrepancy': str(self.discrepancy),
+            'audit_date': self.audit_date.strftime('%Y-%m-%d %H:%M:%S')
+        }

@@ -154,7 +154,8 @@ def detail_movements(request, pk):
     """
     caja = get_object_or_404(CashRegister, pk=pk)
     context = {
-        'caja': caja
+        'caja': caja,
+        'segment': 'movements_page',
     }
 
     return render(request, 'cash_registers/components/modal_detail.html', context)
@@ -184,6 +185,7 @@ def update_movements(request, pk):
     context = {
         'form': form,
         'caja': Caja,
+        'segment': 'movements_page',
     }
 
     return render(request, 'cashs_registers/cash_form.html', context)
@@ -385,6 +387,7 @@ def detail_cash(request, pk):
     context = {
         'cash': cash,
         'url_datatable': url_datatable,
+        'segment': 'cash_page',
     }
 
     # Renderizar el template con los datos de la caja y los movimientos
@@ -536,7 +539,8 @@ def movement_update_for_cash(request, cash_id, movement_id):
             'cash': cash,
             'movement': movement,
             'form': form,
-            'cash_id': cash_id
+            'cash_id': cash_id,
+            'segment': 'cash_page',
         }
 
         return render(request, "cash_registers/components/movement_update.html", context)
@@ -545,4 +549,9 @@ def movement_update_for_cash(request, cash_id, movement_id):
         print(f"ERROR AL ACTUALIZAR UN MOVIMIENTO DE UNA CAJA EN ESPECIFICO -- {str(e)}")
         messages.error(request, "Error al actualizar (Exception)")
         return render(request, "cash_registers/components/movement_update.html")
+    
+
+########################################################################################################
+######################################## VISTAS DE ARQUEOS (CashRegisterAudit) ##########################
+#########################################################################################################    
 
