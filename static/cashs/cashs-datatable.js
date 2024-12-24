@@ -425,6 +425,8 @@ $("#submitMovement").on("click", (event) => {
 
                 // Actualizar el saldo mostrado en la interfaz
                 $("#current_balance").text("$" + updatedBalance.toFixed(2)); // Actualiza el saldo
+                // Actualizo la tabla a los 2 segundos
+                table.ajax.reload(null, false); // false para no reiniciar la paginación
                 console.log("Se actualiza en 2 seg")
             }, 2000);
         },
