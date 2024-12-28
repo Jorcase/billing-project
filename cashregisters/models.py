@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.timezone import now
 # Importando MANANGERS
 from .manangers import MovementManager, CashRegisterManager
+from payments.models import PaymentMethod
 
 
 # Create your models here.
@@ -102,6 +103,13 @@ class Movement(BaseAbstractWithUser):
     """
     Modelo que nos permite manejar LOS DIFERENTES MOVIMIENTOS SOBRE UNA CAJA
     """
+    payment_method = models.ForeignKey(
+        PaymentMethod, 
+        on_delete=models.SET_NULL,
+        related_name='movements',
+        null=True, 
+        blank=True,  
+    )
     cash = models.ForeignKey(
         CashRegister, 
         on_delete=models.CASCADE, 

@@ -64,6 +64,7 @@ LOCAL_APPS = (
     'core',
     'users',
     'reports',
+    'payments',
 )
 
 # Aplicaciones Locales
