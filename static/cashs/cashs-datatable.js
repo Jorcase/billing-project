@@ -244,38 +244,46 @@ function showDeleteModal(data) {
     });
 };
 
-// Funcion para eliminar un Usuario
+// Funcion para eliminar una Caja
 function deleteCash(cashID) {
     // Obtén la URL de eliminación y reemplaza el ID de usuario
     const url = urls.cash_delete.replace('0', cashID);
-    console.log(url);  // Verifica que la URL sea correcta
+    console.log(url); // Verifica que la URL sea correcta
 
     // Obtén el token CSRF
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
 
     $.ajax({
         url: url,
         type: 'POST',
         data: {
-            'csrfmiddlewaretoken': csrfToken  // Asegúrate de incluir el token CSRF
+            'csrfmiddlewaretoken': csrfToken // Asegúrate de incluir el token CSRF
         },
         success: function(data) {
-            console.log("ESTOY ELIMINANDO CORRECTAMENTE")
-            // Aquí puedes recargar los datos desde el servidor, si es necesario
-            table.ajax.reload();  // Recarga los datos de la tabla desde el servidor
+            console.log("Caja eliminada correctamente");
 
-            // También puedes optar por solo reiniciar la tabla sin eliminar una fila manualmente
-            // table.clear().draw();  
-            // Elimina todas las filas y vuelve a dibujar la tabla
-            
-    
+            // Mostrar notificación de éxito si existe
+            if (data.status === 'success') {
+                const message = data.message || "¡Operación realizada con éxito!";
+                showNotification(message, "success");
+            }
+
+            setTimeout(function () {
+                table.ajax.reload(null, false); // Recarga los datos de la tabla sin cambiar de página
+                console.log("DataTable recargado.");
+            }, 2500);
         },
         error: function(xhr, status, error) {
             console.error('Error en la solicitud AJAX:', status, error);
+
+            // Mostrar notificación de error si es necesario
+            const errorMessage = xhr.responseJSON?.message || "Ocurrió un error inesperado.";
+            showNotification(errorMessage, "danger");
         }
     });
-};
+}
+
+
 
 
 
@@ -349,7 +357,7 @@ $("#confirmCloseButton").on("click", function (event) {
     event.preventDefault();
     
     // URL hardcoded
-    const url = urls.cash_close // Asegúrate de que coincida con tu configuración de URL
+    const url = urls.cash_close; // Asegúrate de que coincida con tu configuración de URL
     console.log("URL para cerrar la caja:", url);
     
     const csrfToken = $("[name=csrfmiddlewaretoken]").val(); // Obtener CSRF token
@@ -362,16 +370,20 @@ $("#confirmCloseButton").on("click", function (event) {
         },
         success: function (data) {
             if (data.success) {
-                // Creo que con BOOTRATP NOTIFY SE PUEDE HACER ALGO
-                // Generar notificación en caso de éxito o fallo según el response
+                // Generar notificación en caso de éxito
                 const message = data.message || "¡Operación realizada con éxito!";
                 const tags = data.success ? "success" : "danger"; // Determinar tipo basado en el éxito
 
                 showNotification(message, tags); // Usar función genérica
-                // Recargar la página después de 2 segundos para permitir ver la notificación
+
+                // Recargar el DataTable después de un breve retraso para mostrar la notificación
                 setTimeout(function () {
-                    console.log("Se actualiza en 2 seg")
+                    table.ajax.reload(null, false); // Recarga los datos de la tabla sin cambiar de página
+                    console.log("DataTable recargado.");
                 }, 2500);
+
+                // Cerrar el modal después de la operación
+                $('#closeCashModal').modal('hide');
             } else {
                 // Generar notificación en caso de error
                 const message = "Ocurrió un error inesperado al cerrar la caja.";
@@ -384,6 +396,8 @@ $("#confirmCloseButton").on("click", function (event) {
         },
     });
 });
+
+
 
 // Evento para el boton de crear
 $(document).on("click", "#create-Movimientos", function() {

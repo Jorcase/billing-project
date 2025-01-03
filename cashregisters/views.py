@@ -279,7 +279,12 @@ def CashAjaxList(request):
                 term_conditions |= Q(**{f"{field}__icontains": term})
             conditions &= term_conditions
 
-    filtered_data = CashRegister.objects.filter(conditions).distinct().order_by(order_column)
+    # Agregar filtro para excluir registros eliminados
+
+    filtered_data = CashRegister.objects.filter(
+        conditions, deleted_at__isnull=True  # Solo incluir registros donde delete_at es NULL
+    ).distinct().order_by(order_column)
+    print("hola: ",filtered_data)
     total_records = filtered_data.count()
 
     data = [item.to_json() for item in filtered_data[start: start + length]]
@@ -290,6 +295,7 @@ def CashAjaxList(request):
         'recordsFiltered': total_records,
         'data': data,
     })
+
 
 # View que nos permite cerrar CAJA
 def close_cash_register(request):
@@ -462,7 +468,7 @@ def delete_cash(request, pk):
                 data = cash.to_json()
                 context = {
                     'status': 'success',
-                    'message': 'Usuario eliminado con exito',
+                    'message': 'Caja eliminada con exito',
                     'cash': data
                 }
                 # No agregamos messages.success porque al ser una eliminacion dinamica no suele pasar el mensaje a menos que se actualice
