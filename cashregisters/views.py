@@ -214,10 +214,11 @@ def cash_list(request):
     # Obtener la fecha actual (sin la hora)
     today = timezone.localtime(now()).date()
     print("DIA --> ", today)
-   # Verificar si existe una caja abierta del día actual
+   # Verificar si existe una caja abierta del día actual y sin fecha de cierre
     existing_cash_register = CashRegister.objects.filter(
-        Q(status='open') & 
-        Q(created_at__date=today)  # created_at debe ser un DateTimeField
+        Q(status='open') &
+        Q(created_at__date=today) &
+        Q(close_date__isnull=True)  # Filtrar por cajas sin fecha de cierre
     ).first()
 
     print(f"CAJA RECUPERADA --> ", existing_cash_register)
@@ -307,7 +308,8 @@ def close_cash_register(request):
     if request.method == 'POST':
         # Cerrar la caja
         cash_register.close()
-        return JsonResponse({"success": True, "message": "Caja cerrada exitosamente."})
+        data = cash_register.to_json()
+        return JsonResponse({"success": True, "message": "Caja cerrada exitosamente.", "cash_register": data})
 
     # Si no es POST, devolver un error
     return JsonResponse({"success": False, "message": "Método no permitido."})

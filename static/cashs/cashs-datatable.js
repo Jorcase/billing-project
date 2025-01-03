@@ -90,9 +90,9 @@ function initializeDataTable() {
         
         //Definir las columnas de la tabla
         columns: [
-            { title: "ID", data: 'id', className: "text-center d-none d-md-table-cell", responsivePriority: 4, width: "10%" }, 
-            { title: "Monto Inicial", data: 'initial_balance', className: 'text-center d-node d-md-table-cell', responsivePriority: 1, width: "25%" }, 
-            { title: "Monto Final", data: 'current_balance', className: 'text-center d-node d-md-table-cell', responsivePriority: 3, width: "25%" }, 
+            { title: "ID", data: 'id', className: "text-center d-none d-md-table-cell", responsivePriority: 4, width: "5%" }, 
+            { title: "Monto Inicial", data: 'initial_balance', className: 'text-center d-node d-md-table-cell', responsivePriority: 1, width: "15%" }, 
+            { title: "Monto Final", data: 'current_balance', className: 'text-center d-node d-md-table-cell', responsivePriority: 3, width: "15%" }, 
             {
                 title: "Estado", 
                 data: 'status', 
@@ -123,7 +123,19 @@ function initializeDataTable() {
                     return data; // Devuelve el valor sin formato para exportar u ordenar
                 }
             },
-            { title: "Fecha de cierre", data: 'close_date', className: 'text-center d-node d-md-table-cell', responsivePriority: 3, width: "25%" }, 
+            { 
+                title: "Fecha de cierre", 
+                data: 'close_date',
+                className: 'text-center d-node d-md-table-cell', 
+                responsivePriority: 2, 
+                width: "20%",
+                render: function(data, type, row) {
+                    if (type === 'display' && data) {
+                        return formatDateTime(data);  // Aplica la función de formateo de fecha
+                    }
+                    return data; // Devuelve el valor sin formato para exportar u ordenar
+                }
+            }, 
             {   
                 title: "Acciones",
                 className: 'text-center',
@@ -379,6 +391,7 @@ $("#confirmCloseButton").on("click", function (event) {
                 // Recargar el DataTable después de un breve retraso para mostrar la notificación
                 setTimeout(function () {
                     table.ajax.reload(null, false); // Recarga los datos de la tabla sin cambiar de página
+                    location.reload();
                     console.log("DataTable recargado.");
                 }, 2500);
 
@@ -536,3 +549,4 @@ $('#movementCreateModal').on('shown.bs.modal', function () {
 $('#movementCreateModal').on('hidden.bs.modal', function () {
     $(this).attr('aria-hidden', 'true');
 });
+
